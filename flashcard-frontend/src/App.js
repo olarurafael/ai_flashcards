@@ -23,7 +23,7 @@ function App() {
   const fetchFlashcards = async () => {
     try {
       const response = await axios.get(
-        `https://ai-flashcards-1-rss9.onrender.com/${sessionId}`
+        `https://ai-flashcards-1-rss9.onrender.com/flashcards/${sessionId}`
       );
       setFlashcards(response.data);
     } catch (error) {
