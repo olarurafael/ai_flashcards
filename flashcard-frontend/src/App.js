@@ -100,13 +100,13 @@ function App() {
         onChange={(e) => setText(e.target.value)}
       />
       
-      <div className="button-group">
+      <div className="main-buttons">
         <button onClick={generateFlashcards}>Generate</button>
         <button onClick={fetchFlashcards}>Fetch Saved</button>
-        <div className="download-buttons">
-          <button onClick={() => downloadFlashcards("json")}>Download JSON</button>
-          <button onClick={() => downloadFlashcards("csv")}>Download CSV</button>
-        </div>
+      </div>
+      <div className="floating-controls">
+        <button onClick={() => downloadFlashcards("json")}>Download JSON</button>
+        <button onClick={() => downloadFlashcards("csv")}>Download CSV</button>
         <button className="study-btn" onClick={toggleStudyMode}>
           {studyMode ? "Exit Study Mode" : "Enter Study Mode"}
         </button>

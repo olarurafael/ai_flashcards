@@ -40,13 +40,50 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
 }
 
-/* Buttons */
-.button-group {
+/* Top button row */
+.main-buttons {
   margin-top: 20px;
   display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Floating control buttons (bottom-left) */
+.floating-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
+  z-index: 100;
+}
+
+.floating-controls button {
+  width: 150px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.floating-controls button:hover {
+  background-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+/* Study mode button specific color */
+.floating-controls .study-btn {
+  background-color: #10b981;
+}
+
+.floating-controls .study-btn:hover {
+  background-color: #059669;
 }
 
 .download-buttons {
