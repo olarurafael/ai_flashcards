@@ -27,8 +27,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", 
-                   "https://68e3b7c93b1df7b003fe72d8--unique-marshmallow-053d2b.netlify.app/"],  # frontend origin
+    allow_origins=[
+        "http://localhost:3000",
+        "https://68e3b7c93b1df7b003fe72d8--unique-marshmallow-053d2b.netlify.app",
+        "https://unique-marshmallow-053d2b.netlify.app",  # add main URL too
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
