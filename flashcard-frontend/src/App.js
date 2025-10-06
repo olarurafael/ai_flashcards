@@ -99,15 +99,18 @@ function App() {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <br />
-      <button onClick={generateFlashcards}>Generate</button>
-      <button onClick={fetchFlashcards}>Fetch Saved</button>
-      <button onClick={() => downloadFlashcards("json")}>Download JSON</button>
-      <button onClick={() => downloadFlashcards("csv")}>Download CSV</button>
-      <button onClick={toggleStudyMode}>
-        {studyMode ? "Exit Study Mode" : "Enter Study Mode"}
-      </button>
-
+      
+      <div className="button-group">
+        <button onClick={generateFlashcards}>Generate</button>
+        <button onClick={fetchFlashcards}>Fetch Saved</button>
+        <div className="download-buttons">
+          <button onClick={() => downloadFlashcards("json")}>Download JSON</button>
+          <button onClick={() => downloadFlashcards("csv")}>Download CSV</button>
+        </div>
+        <button className="study-btn" onClick={toggleStudyMode}>
+          {studyMode ? "Exit Study Mode" : "Enter Study Mode"}
+        </button>
+      </div>
       <div className="flashcards">
         {flashcards.map((card, index) => (
           <div key={index} className="card">
@@ -127,8 +130,7 @@ function App() {
         ))}
       </div>
 
-      {/* ✅ Show session ID */}
-      <p style={{ marginTop: "40px", fontSize: "0.8rem", color: "#555" }}>
+      <p className="session-info">
         Session ID: <b>{sessionId}</b>
       </p>
     </div>

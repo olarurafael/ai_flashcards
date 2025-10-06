@@ -1,3 +1,4 @@
+/* Global Layout */
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
@@ -8,44 +9,61 @@ body {
 
 .App {
   text-align: center;
-  padding: 2rem;
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
+  padding: 2rem;
+  min-height: 100vh;
 }
 
+/* Heading */
 h1 {
   color: #1f2937;
   margin-bottom: 1rem;
 }
 
+/* Text Input */
 textarea {
-  width: 100%;
+  width: 90%;
   max-width: 700px;
   padding: 1rem;
   font-size: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  resize: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  resize: vertical;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease-in-out;
 }
 
 textarea:focus {
   outline: none;
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+/* Buttons */
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 button {
   background-color: #6366f1;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  margin: 0.5rem;
+  padding: 10px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 button:hover {
@@ -53,57 +71,69 @@ button:hover {
   transform: translateY(-2px);
 }
 
-.flashcards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
+.study-btn {
+  margin-top: 8px;
+  background-color: #10b981;
 }
 
+.study-btn:hover {
+  background-color: #059669;
+}
+
+/* Flashcards Grid */
+.flashcards {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  width: 100%;
+}
+
+/* Individual Flashcard */
 .card {
-  background-color: white;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 1rem;
-  width: 250px;
-  transition: transform 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.2s ease;
 }
 
 .card:hover {
-  transform: rotateY(5deg) scale(1.05);
+  transform: translateY(-4px);
 }
 
 .card h3 {
   color: #111827;
   margin-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .card p {
   color: #374151;
 }
 
-.card {
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 12px auto;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
+/* Card Button (for study mode reveal) */
 .card button {
-  margin-top: 8px;
-  background-color: #007bff;
+  margin-top: 10px;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .card button:hover {
-  background-color: #0056b3;
+  background-color: #2563eb;
 }
 
+/* Session Info */
+p.session-info {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #555;
+}
