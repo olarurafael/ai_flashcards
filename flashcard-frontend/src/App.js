@@ -9,7 +9,7 @@ function App() {
 
   const generateFlashcards = async () => {
     try {
-      const response = await axios.post("https://ai-flashcards-b5mu.onrender.com/generate", {
+      const response = await axios.post("https://ai-flashcards-1-rss9.onrender.com/generate", {
         text,
         session_id: sessionId,
       });
@@ -23,7 +23,7 @@ function App() {
   const fetchFlashcards = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/flashcards/${sessionId}`
+        `https://ai-flashcards-1-rss9.onrender.com/${sessionId}`
       );
       setFlashcards(response.data);
     } catch (error) {
