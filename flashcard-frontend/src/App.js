@@ -38,7 +38,7 @@ function App() {
       <textarea
         rows="6"
         cols="60"
-        placeholder="Paste your text here..."
+        placeholder="Paste your text here... First command might take a while."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
