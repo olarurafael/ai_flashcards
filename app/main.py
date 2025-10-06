@@ -9,13 +9,15 @@ from openai import OpenAI
 import re
 import json
 from dotenv import load_dotenv
+import os
+
 
 load_dotenv()
 
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-DATABASE_URL = "postgresql://flashuser:flashpass@localhost/flashcards"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -87,72 +89,6 @@ def generate_flashcards(input: TextInput):
 
     return {"flashcards": flashcards}
 
-
-# @app.post("/generate")
-# def generate_flashcards(input: TextInput):
-#     prompt = f"""
-#     Generate flashcards in JSON format from the following text.
-#     Use concise question-answer pairs.
-#     Text: {input.text}
-#     """
-
-#     response = client.chat.completions.create(
-#         model="gpt-4o-mini",  # or gpt-3.5-turbo if you want cheaper
-#         messages=[
-#             {"role": "system", "content": "You are a flashcard generator."},
-#             {"role": "user", "content": prompt}
-#         ],
-#         temperature=0.7,
-#     )
-    
-
-#     raw_content = response.choices[0].message.content
-
-#     clean_content = re.sub(r"^```(json)?|```$", "", raw_content.strip(), flags=re.MULTILINE)
-
-#     try:
-#         flashcards_json = json.loads(clean_content)
-#     except json.JSONDecodeError:
-#         flashcards_json = [
-#             {"question": "Parse error", "answer": raw_content}
-#         ]
-
-#     try:
-#         flashcards_json = json.loads(clean_content)
-#     except:
-#         # fallback: wrap in list if model returns plain text
-#         flashcards_json = [{"question": "Parse error", "answer": clean_content}]
-
-#     db = SessionLocal()
-#     flashcards = []
-#     for card in flashcards_json:
-#         question = card.get("question", "")
-#         answer = card.get("answer", "")
-#         fc = Flashcard(session_id=input.session_id, question=question, answer=answer)
-#         db.add(fc)
-#         flashcards.append({"question": question, "answer": answer})
-#     db.commit()
-#     db.close()
-
-#     return {"flashcards": flashcards}
-
-# @app.post("/generate")
-# def generate_flashcards(input: TextInput):
-#     # super simple "fake AI" for MVP
-#     sentences = input.text.split(".")
-#     flashcards = []
-#     db = SessionLocal()
-#     for i, sentence in enumerate(sentences):
-#         if len(sentence.strip()) < 5:
-#             continue
-#         question = f"What about: {sentence.strip()}?"
-#         answer = sentence.strip()
-#         card = Flashcard(session_id=input.session_id, question=question, answer=answer)
-#         db.add(card)
-#         flashcards.append({"question": question, "answer": answer})
-#     db.commit()
-#     db.close()
-#     return {"flashcards": flashcards}
 
 @app.get("/flashcards/{session_id}")
 def get_flashcards(session_id: str):
