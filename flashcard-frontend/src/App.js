@@ -23,7 +23,8 @@ function App() {
   const fetchFlashcards = async () => {
     try {
       const response = await axios.get(
-        `https://ai-flashcards-1-rss9.onrender.com/flashcards/${sessionId}`
+        // `https://ai-flashcards-1-rss9.onrender.com/flashcards/${sessionId}`
+        `MEssing this up on purpose to verify why netlify won't update the link`
       );
       setFlashcards(response.data);
     } catch (error) {
