@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
 function App() {
   const [text, setText] = useState("");
   const [flashcards, setFlashcards] = useState([]);
-  const [sessionId] = useState("demo1"); // hardcoded for MVP
+  const [sessionId, setSessionId] = useState("");
+
+  // Unique session ID 
+  useEffect(() => {
+    let existingId = localStorage.getItem("session_id");
+    if (!existingId) {
+      existingId = "user-" + Math.random().toString(36).substring(2, 8);
+      localStorage.setItem("session_id", existingId);
+    }
+    setSessionId(existingId);
+  }, []);
 
   const generateFlashcards = async () => {
     try {
@@ -35,6 +45,7 @@ function App() {
   return (
     <div className="App">
       <h1>AI Flashcard Generator</h1>
+
       <textarea
         rows="6"
         cols="60"
@@ -54,6 +65,10 @@ function App() {
           </div>
         ))}
       </div>
+
+      <p style={{ marginTop: "40px", fontSize: "0.8rem", color: "#555" }}>
+        Session ID: <b>{sessionId}</b>
+      </p>
     </div>
   );
 }

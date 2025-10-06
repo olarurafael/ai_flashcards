@@ -60,7 +60,7 @@ def generate_flashcards(input: TextInput):
     """
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini",  # or gpt-3.5-turbo if you want cheaper
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a flashcard generator."},
             {"role": "user", "content": prompt}
@@ -69,8 +69,6 @@ def generate_flashcards(input: TextInput):
     )
 
     raw_content = response.choices[0].message.content
-
-    # Strip Markdown code block fences if present
     clean_content = re.sub(r"^```(json)?|```$", "", raw_content.strip(), flags=re.MULTILINE)
 
     try:
@@ -78,19 +76,30 @@ def generate_flashcards(input: TextInput):
     except json.JSONDecodeError:
         flashcards_json = [{"question": "Parse error", "answer": raw_content}]
 
-    # Save to DB
     db = SessionLocal()
     flashcards = []
+
     for card in flashcards_json:
-        question = card.get("question", "")
-        answer = card.get("answer", "")
-        fc = Flashcard(session_id=input.session_id, question=question, answer=answer)
-        db.add(fc)
-        flashcards.append({"question": question, "answer": answer})
+        question = card.get("question", "").strip()
+        answer = card.get("answer", "").strip()
+
+        # Check for duplicates
+        existing = db.query(Flashcard).filter(
+            Flashcard.session_id == input.session_id,
+            Flashcard.question == question,
+            Flashcard.answer == answer
+        ).first()
+
+        if not existing and question and answer:
+            fc = Flashcard(session_id=input.session_id, question=question, answer=answer)
+            db.add(fc)
+            flashcards.append({"question": question, "answer": answer})
+
     db.commit()
     db.close()
 
     return {"flashcards": flashcards}
+
 
 
 @app.get("/flashcards/{session_id}")
