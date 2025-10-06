@@ -9,7 +9,7 @@ function App() {
 
   const generateFlashcards = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/generate", {
+      const response = await axios.post("https://ai-flashcards-b5mu.onrender.com/generate", {
         text,
         session_id: sessionId,
       });
