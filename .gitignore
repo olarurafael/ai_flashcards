@@ -4,14 +4,29 @@ __pycache__/
 *.pyo
 *.pyd
 *.sqlite3
+.pytest_cache/
+.ruff_cache/
 
 # Virtual env
 venv/
+.venv/
 .env
 .env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
 
 # VS Code
 .vscode/
 
 # OS stuff
 .DS_Store
+*.tsbuildinfo

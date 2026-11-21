@@ -1,0 +1,30 @@
+# Local backend: Postgres plus the API with live reload.
+#   docker compose up      (or: podman compose up)
+# Then run the frontend with `npm run dev` in frontend/; it proxies /api here.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: flashcards
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 2s
+      retries: 15
+
+  api:
+    build: backend
+    env_file: backend/.env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/flashcards
+    ports: ["8000:8000"]
+    volumes: [./backend/app:/srv/app]
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
